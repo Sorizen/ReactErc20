@@ -1,18 +1,76 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    es2021: true,
+    node: true,
+  },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  plugins: ['simple-import-sort', '@typescript-eslint'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  parserOptions: {
+    tsconfigRootDir: '.',
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {},
+      node: {
+        paths: ['src'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
+    'arrow-parens': 0,
+    'no-debugger': 1,
+    'no-warning-comments': [
+      1,
+      {
+        terms: ['hardcoded'],
+        location: 'anywhere',
+      },
     ],
+    'no-return-await': 0,
+    'object-curly-spacing': ['error', 'always'],
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    'no-var': 'error',
+    'comma-dangle': [1, 'always-multiline'],
+    'linebreak-style': ['error', 'unix'],
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    'max-len': [
+      1,
+      {
+        code: 80,
+        comments: 80,
+        ignoreUrls: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+        ignoreRegExpLiterals: true,
+      },
+    ],
+    'no-console': [
+      1,
+      {
+        allow: ['warn', 'error'],
+      },
+    ],
+    'react/display-name': 'off',
   },
 }
