@@ -1,5 +1,3 @@
-import '@/styles/app.scss'
-
 import { useState } from 'react'
 
 import { AppButton } from '@/common'
