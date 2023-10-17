@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   env: {
     es2021: true,
-    node: true,
+    browser: true,
   },
   extends: [
     'eslint:recommended',

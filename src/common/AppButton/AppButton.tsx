@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react'
 import './AppButton.scss'
+
+import { ButtonHTMLAttributes,HTMLProps, useMemo } from 'react'
 
 type MODIFICATION = 'default' | 'border-rounded' | 'border-circle'
 type COLOR = 'default' | 'primary' | 'secondary'
 type SIZE = 'default' | 'medium'
 
-interface Props extends React.HTMLProps<HTMLButtonElement> {
+interface Props extends HTMLProps<HTMLButtonElement> {
     text?: string
     modification?: MODIFICATION,
     color?: COLOR
@@ -25,14 +26,14 @@ const AppButton = ({
             'app-button',
             `app-button--${modification}`,
             `app-button--${color}`,
-            `app-button--${buttonSize}`
+            `app-button--${buttonSize}`,
         ].join(' ')
     }, [modification, color, buttonSize])
 
     return (
         <button
             className={buttonClasses}
-            {...params as React.ButtonHTMLAttributes<HTMLButtonElement> }
+            {...params as ButtonHTMLAttributes<HTMLButtonElement> }
         >
             { params.children ?? text }
         </button>

@@ -18,6 +18,10 @@
   --background-secondary-main: #{$background-secondary-main};
   --background-secondary-dark: #{$background-secondary-dark};
 
+  --background-tertiary-light: #{$background-tertiary-light};
+  --background-tertiary-main: #{$background-tertiary-main};
+  --background-tertiary-dark: #{$background-tertiary-dark};
+
   /* status colors */
   --success-light: #{$success-light};
   --success-main: #{$success-main};
@@ -44,6 +48,7 @@
   /* border colors */
   --border-primary-light: #{$border-primary-light};
   --border-primary-main: #{$border-primary-main};
+  --border-primary-dark: #{$border-primary-dark};
 
   /* App variables */
   --app-bg: #{$app-bg};
@@ -85,10 +90,10 @@
   --field-transition-duration: 0.2s;
 
   /* paddings */
-  --field-padding-top: #{toRem(14)};
-  --field-padding-right: #{toRem(16)};
-  --field-padding-bottom: #{toRem(18)};
-  --field-padding-left: #{toRem(14)};
+  --field-padding-top: #{toRem(15)};
+  --field-padding-right: #{toRem(15)};
+  --field-padding-bottom: #{toRem(15)};
+  --field-padding-left: #{toRem(15)};
   --field-padding:
     var(--field-padding-top)
     var(--field-padding-right)

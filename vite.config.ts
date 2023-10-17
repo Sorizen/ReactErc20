@@ -10,6 +10,16 @@ const root = path.resolve(__dirname, resolveApp('src'))
 
 export default defineConfig({
   plugins: [react()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: [
+          '@import "@/styles/_functions.scss";',
+          '@import "@/styles/_mixins.scss";',
+        ].join(''),
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': `${root}/`
