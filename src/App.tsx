@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-        <AppButton text="hi!" buttonSize="medium" color="primary" />
+        <AppButton text="hi!" buttonSize="medium" scheme="primary" />
         <InputField scheme="primary" value={input} inputHandler={setInput} />
     </>
   )

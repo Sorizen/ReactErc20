@@ -3,20 +3,20 @@ import './AppButton.scss'
 import { ButtonHTMLAttributes,HTMLProps, useMemo } from 'react'
 
 type MODIFICATION = 'default' | 'border-rounded' | 'border-circle'
-type COLOR = 'default' | 'primary' | 'secondary'
+type SCHEME = 'default' | 'primary' | 'secondary'
 type SIZE = 'default' | 'medium'
 
 interface Props extends HTMLProps<HTMLButtonElement> {
     text?: string
     modification?: MODIFICATION,
-    color?: COLOR
+    scheme?: SCHEME
     buttonSize?: SIZE
 }
 
 const AppButton = ({
     text = '',
     modification = 'default',
-    color = 'default',
+    scheme = 'default',
     buttonSize = 'default',
     ...params
 }: Props) => {
@@ -25,10 +25,10 @@ const AppButton = ({
         return [
             'app-button',
             `app-button--${modification}`,
-            `app-button--${color}`,
+            `app-button--${scheme}`,
             `app-button--${buttonSize}`,
         ].join(' ')
-    }, [modification, color, buttonSize])
+    }, [modification, scheme, buttonSize])
 
     return (
         <button
