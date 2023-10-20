@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "useDefineForClassFields": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "composite": true,
+    "allowImportingTsExtensions": true,
+    "types": [
+      "node",
+      "vite/client",
+      "@types/lodash",
+    ],
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "lib": [
+      "ESNext",
+      "dom",
+    ],
+    "isolatedModules": true,
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "index.d.ts",
+    "package.json",
+    "src/**/*.json"
+  ]
+}
