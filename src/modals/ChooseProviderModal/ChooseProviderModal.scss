@@ -1,0 +1,16 @@
+.choose-provider-modal__providers {
+  display: flex;
+  gap: toRem(12);
+}
+
+.choose-provider-modal__choose-button {
+  width: toRem(250);
+  height: toRem(250);
+  border-radius: toRem(20);
+  background: var(--background-secondary-main);
+  transition: background 0.2s ease-in-out;
+
+  &:hover {
+    background: var(--background-secondary-light);
+  }
+}

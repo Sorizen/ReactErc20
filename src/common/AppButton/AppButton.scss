@@ -1,4 +1,6 @@
 .app-button {
+  --button-icon-size: 1.2em;
+
   outline: 0;
   font-family: var(--app-font-family);
   margin: 0;
@@ -63,5 +65,27 @@
 
   &--border-circle {
     border-radius: toRem(100);
+  }
+
+  &--icon-left {
+    padding-left: 3em;
+  }
+
+  &--icon-right {
+    padding-right: 3em;
+  }
+
+  .app-button__icon {
+    position: absolute;
+    max-width: var(--button-icon-size);
+    max-height: var(--button-icon-size);
+
+    &--left {
+      left: 1em;
+    }
+
+    &--right {
+      right: 1em;
+    }
   }
 }
