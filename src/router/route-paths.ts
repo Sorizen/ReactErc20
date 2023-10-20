@@ -1,4 +1,4 @@
-export enum ROUTE_PATHS {
+export enum ROUTE_PATH {
     app = '/',
     connect = '/connect'
 }

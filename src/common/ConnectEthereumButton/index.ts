@@ -1,3 +1,3 @@
-import ConnectEthereumButton from "./ConnectEthereumButton.tsx";
+import ConnectEthereumButton from './ConnectEthereumButton'
 
 export default ConnectEthereumButton

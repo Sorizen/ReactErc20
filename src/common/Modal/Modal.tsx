@@ -8,6 +8,8 @@ import { useClickAway } from 'react-use'
 import { AppButton } from '@/common'
 import { ICON_NAMES } from '@/enums'
 
+const MODAL_ANIMATION_TIMEOUT = 500 //ms
+
 interface Props extends HTMLAttributes<HTMLDivElement> {
     isShown: boolean
     updateIsShown: Dispatch<SetStateAction<boolean>>
@@ -49,12 +51,12 @@ const Modal = (
                     unmountOnExit
                     mountOnEnter
                     in={isShown}
-                    timeout={500}
+                    timeout={MODAL_ANIMATION_TIMEOUT}
                 >
                     {
                         state => (
                             <div
-                                className={`modal ${className || ''} modal--${state}`}
+                                className={`modal ${className ?? ''} modal--${state}`}
                                 {...rest}
                             >
                                 <div
@@ -77,7 +79,7 @@ const Modal = (
                                             onClick={() => updateIsShown(false)}
                                         />
                                     }
-                                    {children}
+                                    { children }
                                 </div>
                             </div>
                         )

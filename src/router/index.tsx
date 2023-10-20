@@ -1,17 +1,17 @@
 import { Suspense } from 'react'
 import { Provider } from 'react-redux'
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
-import { PersistGate } from 'redux-persist/integration/react';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom'
+import { PersistGate } from 'redux-persist/integration/react'
 
-import App from "@/App.tsx";
+import App from '@/App.tsx'
 import { ConnectPage } from '@/pages'
 import store, { persistor } from '@/store'
 
-import { ROUTE_PATHS } from "./route-paths.ts";
+import { ROUTE_PATH } from './route-paths.ts'
 
 export const router = createBrowserRouter([
     {
-      path: ROUTE_PATHS.app,
+      path: ROUTE_PATH.app,
         element: (<Suspense fallback={<></>}>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
@@ -24,18 +24,18 @@ export const router = createBrowserRouter([
       children: [
           {
               path: '/',
-              element: <Navigate replace to={ROUTE_PATHS.connect} />,
+              element: <Navigate replace to={ROUTE_PATH.connect} />,
           },
           {
-              path: ROUTE_PATHS.connect,
+              path: ROUTE_PATH.connect,
               element: <ConnectPage />,
           },
           {
               path: '*',
-              element: <Navigate replace to={ROUTE_PATHS.connect} />,
+              element: <Navigate replace to={ROUTE_PATH.connect} />,
           },
       ],
     },
 ]);
 
-export  { ROUTE_PATHS } from './route-paths.ts'
+export  { ROUTE_PATH } from './route-paths.ts'

@@ -55,7 +55,9 @@ const AppButton = ({
                         {
                             iconLeft && <Icon className="app-button__icon app-button__icon--left" name={iconLeft} />
                         }
-                        { params.children ?? <span className="app-button__text">{text}</span> }
+                        {
+                            params.children ?? <span className="app-button__text">{text}</span>
+                        }
                         {
                             iconRight && <Icon className="app-button__icon app-button__icon--right"  name={iconRight} />
                         }

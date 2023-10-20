@@ -3,14 +3,22 @@ import './ChooseProviderModal.scss'
 import {
     PROVIDERS,
 } from '@distributedlab/w3p'
-import { Dispatch, HTMLAttributes, SetStateAction, useCallback, useContext, useEffect, useState } from 'react'
+import {
+    Dispatch,
+    HTMLAttributes,
+    SetStateAction,
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
+} from 'react'
 
 import { AppButton, AppLoader,ErrorMessage, Modal } from '@/common'
 import { ALLOWED_PROVIDERS } from '@/consts'
 import { ProviderContext } from '@/context'
 import { detectProviders, initProvider } from '@/helpers'
-import { useAppDispatch } from "@/hooks";
-import { cleanCurrentProvider,setCurrentProvider } from "@/store/slices/useProviderSlice.ts";
+import { useAppDispatch } from '@/store'
+import { cleanCurrentProvider,setCurrentProvider } from '@/store/slices/useProviderSlice.ts'
 import { AllowedProvider } from '@/types'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -18,7 +26,9 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
     updateIsShown: Dispatch<SetStateAction<boolean>>
     isCloseByClickOutside?: boolean
 }
-const ChooseProviderModal = ({ isShown, updateIsShown, isCloseByClickOutside, ...rest }: Props) => {
+
+const ChooseProviderModal =
+    ({ isShown, updateIsShown, isCloseByClickOutside, ...rest }: Props) => {
     const dispatch = useAppDispatch()
     const w3Provider = useContext(ProviderContext)
 
@@ -43,6 +53,7 @@ const ChooseProviderModal = ({ isShown, updateIsShown, isCloseByClickOutside, ..
                 setActiveProviders(providersToConnect)
             }
         } catch (e) {
+            //TODO: ADD ERRORS VALIDATION
             setIsLoadFailed(true)
         }
         setIsLoading(false)

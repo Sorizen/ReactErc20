@@ -11,12 +11,10 @@ const root = path.resolve(__dirname, resolveApp('src'))
 export default defineConfig({
   plugins: [
       react(),
-    createSvgIconsPlugin({
-      iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
-      symbolId: '[name]',
-    }),
-
-
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+        symbolId: '[name]',
+      }),
   ],
   css: {
     preprocessorOptions: {

@@ -1,9 +1,9 @@
 import './ErrorMessage.scss'
 
-import { HTMLAttributes, useMemo } from "react";
+import { HTMLAttributes, useMemo } from 'react'
 
 import { Icon } from '@/common'
-import { ICON_NAMES } from "@/enums";
+import { ICON_NAMES } from '@/enums'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
     message?: string,

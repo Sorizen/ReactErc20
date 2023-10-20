@@ -75,25 +75,25 @@
   &--icon-right {
     padding-right: 3em;
   }
+}
 
-  .app-button__icon {
-    position: absolute;
-    max-width: 100%;
-    max-height: 100%;
+.app-button__icon {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
 
-    &--left,
-    &--right {
-      max-width: var(--button-icon-size);
-      max-height: var(--button-icon-size);
-    }
+  &--left,
+  &--right {
+    max-width: var(--button-icon-size);
+    max-height: var(--button-icon-size);
+  }
 
-    &--left {
-      left: 1em;
-    }
+  &--left {
+    left: 1em;
+  }
 
-    &--right {
-      right: 1em;
-    }
+  &--right {
+    right: 1em;
   }
 }
 

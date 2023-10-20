@@ -1,13 +1,17 @@
 import { HTMLAttributes, useMemo } from 'react'
 
 import { Icon } from '@/common'
-import { ICON_NAMES } from "@/enums";
+import { ICON_NAMES } from '@/enums'
 
-const AppLoader = ({ className, ...params }: HTMLAttributes<HTMLDivElement> ) => {
-    const classNames = useMemo(() => [
+const AppLoader =
+    ({ className, ...params }: HTMLAttributes<HTMLDivElement> ) => {
+    const classNames = useMemo(
+        () => [
         'app-loader',
         ...[className ?? []],
-    ].join(' '), [])
+    ].join(' '),
+        [className],
+    )
     return (
         <div className={classNames} {...params}>
             <Icon name={ICON_NAMES.loader} />

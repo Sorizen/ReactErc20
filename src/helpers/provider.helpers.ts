@@ -1,17 +1,17 @@
 import {
-    CHAIN_TYPES, CoinbaseProvider,
-    MetamaskProvider, PhantomProvider,
+    CHAIN_TYPES,
+    MetamaskProvider,
+    PhantomProvider,
     Provider,
     ProviderDetector,
-    ProviderProxyConstructor,
     PROVIDERS, WalletConnectEvmProvider,
 } from '@distributedlab/w3p'
-import { BrowserProvider, Eip1193Provider } from 'ethers'
 
 import { useProvider } from '@/hooks'
 
 export const detectProviders = async () => {
     const providerDetector = new ProviderDetector<PROVIDERS>()
+    // TODO: MOVE IT TO CONST WHEN CHAINS WILL BE APPLIED
     Provider.setChainsDetails({
         1284: {
             id: '0x504',
@@ -49,21 +49,22 @@ export const initProvider =
             Object.keys(foundProviders)
                 .some(foundName => foundName === providerToInit)
         if(foundProviderToInit) {
-                if(
-                    providerToInit === PROVIDERS.Metamask
-                ) {
+            switch (providerToInit) {
+                case PROVIDERS.Metamask:
                     await provider.init(MetamaskProvider, providerDetector)
-                }
-                if(
-                    providerToInit === PROVIDERS.WalletConnect
-                ) {
-                    await provider.init(WalletConnectEvmProvider, providerDetector)
-                }
-                if(
-                    providerToInit === PROVIDERS.Phantom
-                ) {
+                    return
+                case PROVIDERS.WalletConnect:
+                    await provider.init(
+                        WalletConnectEvmProvider,
+                        providerDetector,
+                    )
+                    return
+                case PROVIDERS.Phantom:
                     await provider.init(PhantomProvider, providerDetector)
-                }
+                    return
+                default:
+                    return
+            }
         }
     }
 }

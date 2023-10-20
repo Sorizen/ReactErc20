@@ -1,6 +1,6 @@
-import { PROVIDERS } from "@distributedlab/w3p";
+import { PROVIDERS } from '@distributedlab/w3p'
 
-import { ICON_NAMES } from "@/enums";
+import { ICON_NAMES } from '@/enums'
 import { AllowedProvider } from '@/types'
 
 export const ALLOWED_PROVIDERS: AllowedProvider[] = [

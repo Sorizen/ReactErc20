@@ -1,13 +1,13 @@
 import './ConnectEthereumButton.scss'
 
-import { PROVIDERS } from "@distributedlab/w3p";
+import { PROVIDERS } from '@distributedlab/w3p'
 import { useContext, useMemo, useState } from 'react'
 
 import { AppButton } from '@/common'
 import { ProviderContext } from '@/context'
-import { ICON_NAMES } from "@/enums";
-import { useAppSelector } from "@/hooks";
+import { ICON_NAMES } from '@/enums'
 import { ChooseProviderModal } from '@/modals'
+import { useAppSelector } from '@/store'
 
 const ConnectEthereumButton = () => {
     const currentProvider =
