@@ -2,33 +2,27 @@ import {
     Chain,
     ChainId,
     createProvider,
-    CreateProviderOpts,
     IProvider,
-    ProviderEventPayload,
+    ProviderDetector,
+    ProviderListeners,
     ProviderProxyConstructor,
     PROVIDERS,
     TransactionResponse,
     TxRequestBody,
 } from '@distributedlab/w3p'
-import { useCallback, useEffect, useState } from 'react'
-
-const PROVIDER_EVENTS: Array<keyof IProvider> = [
-    'onInitiated',
-    'onConnect',
-    'onAccountChanged',
-    'onChainChanged',
-    'onDisconnect',
-]
+import { useEffect, useState } from 'react'
 
 export const useProvider = () => {
     const [provider, setProvider] = useState<IProvider | null>(null)
     const [providerReactiveState, setProviderReactiveState] = useState(() => (
         {
             address: provider?.address,
-            isConnected: provider?.isConnected,
             chainId: provider?.chainId,
             chainType: provider?.chainType,
+            isConnected: provider?.isConnected,
             providerType: provider?.providerType,
+            chainDetails: provider?.chainDetails,
+            rawProvider: provider?.rawProvider,
         }
     ))
 
@@ -57,52 +51,58 @@ export const useProvider = () => {
     const getAddressUrl = (chain: Chain, address: string): string =>
         provider?.getAddressUrl?.(chain, address) ?? ''
 
+    const _updateProviderState = () => {
+        setProviderReactiveState({
+            address: provider?.address,
+            chainId: provider?.chainId,
+            chainType: provider?.chainType,
+            isConnected: provider?.isConnected,
+            providerType: provider?.providerType,
+            chainDetails: provider?.chainDetails,
+            rawProvider: provider?.rawProvider,
+        })
+    }
+
     const init = async (
         providerProxy: ProviderProxyConstructor,
-        createProviderOpts?: CreateProviderOpts<PROVIDERS>,
+        providerDetector: ProviderDetector<PROVIDERS>,
+        listeners?: ProviderListeners,
     ) => {
         const initedProvider = await createProvider(
             providerProxy,
-            createProviderOpts,
+            {
+                providerDetector,
+                listeners: {
+                    onAccountChanged: () => {
+                        listeners?.onAccountChanged?.()
+                        _updateProviderState()
+                    },
+                    onChainChanged: () => {
+                        listeners?.onChainChanged?.()
+                        _updateProviderState()
+                    },
+                    onConnect: () => {
+                        listeners?.onConnect?.()
+                        _updateProviderState()
+                    },
+                    onDisconnect: () => {
+                        listeners?.onDisconnect?.()
+                        _updateProviderState()
+                    },
+                },
+            },
         )
         setProvider(initedProvider)
     }
 
-    const setListeners = useCallback(() => {
-        if (!provider) return
-        PROVIDER_EVENTS.forEach(event => {
-            const providerEvent = provider[event] as (
-                // eslint-disable-next-line no-unused-vars
-                cb: (payload: ProviderEventPayload) => void,
-            ) => void
-
-            providerEvent?.call(provider, payload => {
-                setProviderReactiveState(prev => ({
-                    ...prev,
-                    ...payload,
-                }))
-            })
-        })
-    }, [provider])
-
     useEffect(() => {
         if(provider?.address) {
-            provider?.clearHandlers()
-            setListeners()
-
-            setProviderReactiveState(prev => ({
-                ...prev,
-                address: provider?.address,
-                isConnected: provider?.isConnected,
-                chainId: provider?.chainId,
-                chainType: provider?.chainType,
-                providerType: provider?.providerType,
-            }))
+            _updateProviderState()
             return () => {
                 provider?.clearHandlers()
             }
         }
-    }, [provider, setListeners])
+    }, [provider?.address])
 
     return {
         provider,

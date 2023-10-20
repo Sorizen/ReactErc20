@@ -1,0 +1,12 @@
+.error-message {
+  display: flex;
+  flex-direction: column;
+  gap: toRem(12);
+  align-items: center;
+  color: var(--error-main);
+}
+
+.error-message__title {
+  font-weight: 600;
+  color: var(--error-main);
+}

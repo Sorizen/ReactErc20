@@ -24,9 +24,10 @@ const AppButton = ({
     modification = 'default',
     scheme = 'default',
     buttonSize = 'default',
-    iconLeft = undefined,
-    iconRight = undefined,
-    icon = undefined,
+    iconLeft,
+    iconRight,
+    icon,
+    className,
     ...params
 }: Props) => {
 
@@ -38,8 +39,9 @@ const AppButton = ({
             `app-button--${buttonSize}`,
             ...[iconLeft ? 'app-button--icon-left' : []],
             ...[iconRight ? 'app-button--icon-right' : []],
+            className,
         ].join(' ')
-    }, [modification, scheme, buttonSize])
+    }, [modification, scheme, buttonSize, iconLeft, iconRight])
 
     return (
         <button
@@ -53,7 +55,7 @@ const AppButton = ({
                         {
                             iconLeft && <Icon className="app-button__icon app-button__icon--left" name={iconLeft} />
                         }
-                        { params.children ?? text }
+                        { params.children ?? <span className="app-button__text">{text}</span> }
                         {
                             iconRight && <Icon className="app-button__icon app-button__icon--right"  name={iconRight} />
                         }

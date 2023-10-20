@@ -52,17 +52,17 @@ export const initProvider =
                 if(
                     providerToInit === PROVIDERS.Metamask
                 ) {
-                    await provider.init(MetamaskProvider, { providerDetector })
+                    await provider.init(MetamaskProvider, providerDetector)
                 }
                 if(
                     providerToInit === PROVIDERS.WalletConnect
                 ) {
-                    await provider.init(WalletConnectEvmProvider, { providerDetector })
+                    await provider.init(WalletConnectEvmProvider, providerDetector)
                 }
                 if(
                     providerToInit === PROVIDERS.Phantom
                 ) {
-                    await provider.init(PhantomProvider, { providerDetector })
+                    await provider.init(PhantomProvider, providerDetector)
                 }
         }
     }

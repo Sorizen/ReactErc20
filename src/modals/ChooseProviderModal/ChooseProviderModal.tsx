@@ -5,7 +5,7 @@ import {
 } from '@distributedlab/w3p'
 import { Dispatch, HTMLAttributes, SetStateAction, useCallback, useContext, useEffect, useState } from 'react'
 
-import { AppButton, Modal } from '@/common'
+import { AppButton, AppLoader,ErrorMessage, Modal } from '@/common'
 import { ALLOWED_PROVIDERS } from '@/consts'
 import { ProviderContext } from '@/context'
 import { detectProviders, initProvider } from '@/helpers'
@@ -16,14 +16,14 @@ import { AllowedProvider } from '@/types'
 interface Props extends HTMLAttributes<HTMLDivElement> {
     isShown: boolean
     updateIsShown: Dispatch<SetStateAction<boolean>>
-    onSubmit: () => Promise<void>,
     isCloseByClickOutside?: boolean
 }
 const ChooseProviderModal = ({ isShown, updateIsShown, isCloseByClickOutside, ...rest }: Props) => {
     const dispatch = useAppDispatch()
     const w3Provider = useContext(ProviderContext)
 
-    const [activeProviders, setActiveProviders] = useState<AllowedProvider[]>([])
+    const [activeProviders, setActiveProviders] =
+        useState<AllowedProvider[]>([])
     const [isLoadFailed, setIsLoadFailed] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -49,23 +49,34 @@ const ChooseProviderModal = ({ isShown, updateIsShown, isCloseByClickOutside, ..
     }, [])
 
     const initChosenProvider = async (chosenProvider: PROVIDERS) => {
+        setIsLoading(true)
         try {
             if(!w3Provider) { return }
             await initProvider(w3Provider, chosenProvider)
             dispatch(setCurrentProvider(chosenProvider))
         } catch (e) {
             dispatch(cleanCurrentProvider())
+            setIsLoadFailed(true)
         }
+        setIsLoading(false)
     }
 
     const connectProvider = async () => {
+        setIsLoading(true)
         try {
             if(w3Provider?.provider && !w3Provider.address) {
                 await w3Provider.connect()
+                closeModal()
             }
         } catch (e) {
             dispatch(cleanCurrentProvider())
+            setIsLoadFailed(true)
         }
+        setIsLoading(false)
+    }
+
+    const closeModal = () => {
+        updateIsShown(false)
     }
 
     useEffect(() => {
@@ -83,25 +94,34 @@ const ChooseProviderModal = ({ isShown, updateIsShown, isCloseByClickOutside, ..
             isShown={isShown}
             updateIsShown={updateIsShown}
             isCloseButton
+            modalTitle="Connect your wallet"
             isCloseByClickOutside={isCloseByClickOutside}
             {...rest}
         >
-            <div className="choose-provider-modal__inner">
-                <div className="choose-provider-modal__providers">
-                    { activeProviders.map(provider => {
-                        return (
-                            <AppButton
-                                className="choose-provider-modal__choose-button"
-                                key={provider.name}
-                                icon={provider.icon}
-                                onClick={
-                                    () => initChosenProvider(provider.name)
-                                }
-                            />
-                        )
-                    }) }
-                </div>
-            </div>
+            {
+                isLoading
+                    ? <AppLoader className="choose-provider-modal__status-message" />
+                    : isLoadFailed
+                        ? <ErrorMessage className="choose-provider-modal__status-message" />
+                        : <div className="choose-provider-modal__inner">
+                            <div className="choose-provider-modal__providers">
+                                { activeProviders.map(provider =>
+                                    (
+                                        <AppButton
+                                            className="choose-provider-modal__choose-button"
+                                            key={provider.name}
+                                            icon={provider.icon}
+                                            onClick={
+                                                () =>
+                                                    initChosenProvider(
+                                                        provider.name,
+                                                    )
+                                            }
+                                        />
+                                    )) }
+                            </div>
+                        </div>
+            }
         </Modal>
     );
 };

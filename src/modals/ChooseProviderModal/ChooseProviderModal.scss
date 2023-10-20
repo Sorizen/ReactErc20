@@ -1,16 +1,22 @@
 .choose-provider-modal__providers {
   display: flex;
   gap: toRem(12);
+  min-height: toRem(200);
 }
 
 .choose-provider-modal__choose-button {
-  width: toRem(250);
-  height: toRem(250);
+  width: toRem(200);
+  height: toRem(200);
   border-radius: toRem(20);
   background: var(--background-secondary-main);
   transition: background 0.2s ease-in-out;
+  padding: toRem(20);
 
   &:hover {
     background: var(--background-secondary-light);
   }
+}
+
+.choose-provider-modal__status-message {
+  max-height: toRem(150);
 }

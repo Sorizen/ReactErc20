@@ -13,24 +13,28 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
     updateIsShown: Dispatch<SetStateAction<boolean>>
     isCloseByClickOutside?: boolean
     isCloseButton?: boolean
+    modalTitle?: string
 }
 
 const modalRoot = document.getElementById('modal') as HTMLElement
 
-const Modal = ({
-                              isShown,
-                              updateIsShown,
-                              children,
-                              className,
-                              isCloseButton = false,
-                              isCloseByClickOutside = true,
-                              ...rest
-                          }: Props) => {
+const Modal = (
+    {
+        isShown,
+        updateIsShown,
+        children,
+        className,
+        isCloseButton = false,
+        modalTitle = '',
+        isCloseByClickOutside = true,
+        ...rest
+    }: Props,
+) => {
     const modalPaneRef = useRef(null)
 
     const modalPaneClasses = useMemo(() => [
         'modal__pane',
-        ...[isCloseButton ? 'modal__pane--top-padding' : []],
+        ...[isCloseButton || modalTitle ? 'modal__pane--top-padding' : []],
     ].join(' '), [isCloseButton])
 
     useClickAway(modalPaneRef, () => {
@@ -57,6 +61,14 @@ const Modal = ({
                                     ref={modalPaneRef}
                                     className={modalPaneClasses}
                                 >
+                                    {
+                                        modalTitle &&
+                                        <h3
+                                            className="modal__title"
+                                        >
+                                            { modalTitle }
+                                        </h3>
+                                    }
                                     {
                                         isCloseButton &&
                                         <AppButton

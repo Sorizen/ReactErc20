@@ -58,6 +58,13 @@ $z-index-local: 100;
   }
 }
 
+.modal__title {
+  position: absolute;
+  font-weight: 600;
+  left: toRem(16);
+  top: toRem(16);
+}
+
 @keyframes scale-pane {
   0%{
     transform: scale(0);
