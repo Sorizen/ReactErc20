@@ -1,17 +1,30 @@
-import { useState } from 'react'
+import { HTMLAttributes, useEffect } from 'react'
 
-import { AppButton } from '@/common'
-import { InputField } from '@/fields'
+import { ProviderContext } from '@/context'
+import { initProvider } from '@/helpers'
+import { useProvider } from '@/hooks'
+import { useAppSelector } from '@/store'
 
-function App() {
-    const [input, setInput] = useState('')
+const App = ({ children }: HTMLAttributes<HTMLDivElement>) => {
+    const currentProvider =
+        useAppSelector(state => state.useProviderModule.currentProvider)
+    const provider = useProvider()
 
-  return (
-    <>
-        <AppButton text="hi!" buttonSize="medium" scheme="primary" />
-        <InputField scheme="primary" value={input} inputHandler={setInput} />
-    </>
-  )
+    useEffect(
+        () => {
+            if(!currentProvider) { return }
+            initProvider(provider, currentProvider)
+        },
+        [provider.address],
+    );
+
+    return (
+        <ProviderContext.Provider value={provider}>
+            <div className="app">
+                { children }
+            </div>
+        </ProviderContext.Provider>
+    )
 }
 
 export default App
